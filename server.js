@@ -4,13 +4,13 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 
 //Connexion à la base de donnée
-mongoose.connect('mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb').then(() => {
+mongoose.connect('mongodb://127.0.0.1:27017/mongodb',{useNewUrlParser: true} ).then(() => {
     console.log('Connected to mongoDB')
 }).catch(e => {
     console.log('Error while DB connecting');
     console.log(e);
 });
-
+mongoose.set('useCreateIndex', true);
 
 //On définit notre objet express nommé app
 const app = express();
@@ -39,5 +39,5 @@ require(__dirname + '/controllers/userController')(router);
 
 
 //Définition et mise en place du port d'écoute
-var port = 8000;
+var port = 8009;
 app.listen(port, () => console.log(`Listening on port ${port}`));
