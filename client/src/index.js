@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import AppDragDropDemo from './AppDragDropDemo';
+import AppSlideShow from './AppSlideShow';
+import AppWithModal from './AppWithModal';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import registerServiceWorker from './registerServiceWorker';
+
+ReactDOM.render(<AppDragDropDemo />, document.getElementById('root'));
+registerServiceWorker();

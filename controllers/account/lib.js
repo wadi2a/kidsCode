@@ -82,7 +82,7 @@ function login(req, res) {
                     "text": "L'utilisateur n'existe pas"
                 })
             } else {
-                if (user.authenticate(req.body.password)) {
+                if (user.authentification(req.body.password)) {
                     res.status(200).json({
                         "token": user.getToken(),
                         "text": "Authentification réussi"
@@ -96,6 +96,24 @@ function login(req, res) {
         })
     }
 }
+
+var direBonjour = function(req, res) {
+    console.log('Bonjour !');
+    res.status(200).json({
+
+        "text": "Bonjour !"
+    })
+}
+
+var direByeBye = function(req, res) {
+    res.status(200).json({
+
+        "text": "Bye Bye !"
+    })
+}
+
+exports.direBonjour = direBonjour;
+exports.direByeBye = direByeBye;
 
 //On exporte nos deux fonctions
 
