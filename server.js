@@ -22,7 +22,14 @@ var urlencodedParser = bodyParser.urlencoded({
 app.use(urlencodedParser);
 app.use(bodyParser.json());
 
-
+//Définition des CORS
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
 //Définition du routeur
 var router = express.Router();
 app.use('/user', router);
@@ -39,11 +46,39 @@ app.post('/login',function(req,res){
     account.login(req,res);
 })
 
-app.post('/bonjour',function(req,res){
+app.get('/bonjour',function(req,res){
 
     account.direBonjour(req,res);
 })
+let busboy     = require('connect-busboy');
+let fs      = require('fs'),
+    path    = require('path'),
+    async   = require('async');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
 
+app.use(busboy());
+
+
+app.get('/listFile',function(req,res){
+    let myDir = [];
+    fs.readdir(path.join(__dirname),(err, result)=>{
+        async.each(result,(file, callback) => {
+            // --
+            fs.stat(path.join(__dirname,file), (err, stat) => {
+                if(!stat.isFile()){
+                    myDir.push('http://localhost:8008/files/'+file+'');
+                }
+                callback()
+            })
+        },(err)=>{
+            res.status(200).json({repo : myDir})
+        })
+    })
+});
+app.get('/files/:path', function (req, res) {
+    res.sendFile(path.join(__dirname,req.params.path))
+});
 
 //Définition et mise en place du port d'écoute
 var port = 8008;

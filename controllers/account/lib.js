@@ -85,7 +85,8 @@ function login(req, res) {
                 if (user.authentification(req.body.password)) {
                     res.status(200).json({
                         "token": user.getToken(),
-                        "text": "Authentification réussi"
+                        "text": "Authentification réussi",
+                        "utilisateur":user.getUtilisateur()
                     })
                 } else {
                     res.status(401).json({
@@ -101,7 +102,7 @@ var direBonjour = function(req, res) {
     console.log('Bonjour !');
     res.status(200).json({
 
-        "text": "Bonjour !"
+        "text": "<p>Bonjour !</p>"
     })
 }
 
