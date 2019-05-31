@@ -25,8 +25,9 @@ userSchema.methods = {
 	},
 	getToken: function () {
 		return jwt.encode(this, config.secret);
-	},getUtilisateur: function () {
-		return this.password;
+	},
+    getUser: function () {
+		return this.email;
 	}
 }
 

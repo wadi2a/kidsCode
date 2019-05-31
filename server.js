@@ -31,20 +31,13 @@ app.use(function (req, res, next) {
     next();
 });
 //Définition du routeur
-var router = express.Router();
+let router = express.Router();
 app.use('/user', router);
 require(__dirname + '/controllers/userController')(router);
+app.use('/historique', router);
+require(__dirname + '/controllers/historiqueController')(router);
 
-const account = require('./controllers/account/lib.js');
 
-app.post('/signup',function(req,res){
-
-    account.signup(req,res);
-})
-app.post('/login',function(req,res){
-
-    account.login(req,res);
-})
 
 app.get('/bonjour',function(req,res){
 

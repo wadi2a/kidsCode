@@ -8,11 +8,11 @@ function signup(req, res) {
             "text": "Requête invalide"
         })
     } else {
-        var user = {
+        let user = {
             email: req.body.email,
             password: passwordHash.generate(req.body.password)
         }
-        var findUser = new Promise(function (resolve, reject) {
+        let findUser = new Promise(function (resolve, reject) {
             User.findOne({
                 email: user.email
             }, function (err, result) {
@@ -29,7 +29,7 @@ function signup(req, res) {
         })
 
         findUser.then(function () {
-            var _u = new User(user);
+            let _u = new User(user);
             _u.save(function (err, user) {
                 if (err) {
                     res.status(500).json({
@@ -38,7 +38,9 @@ function signup(req, res) {
                 } else {
                     res.status(200).json({
                         "text": "Succès",
-                        "token": user.getToken()
+                        "token": user.getToken(),
+                        "user":  user.getUtilisateur()
+
                     })
                 }
             })
@@ -86,7 +88,7 @@ function login(req, res) {
                     res.status(200).json({
                         "token": user.getToken(),
                         "text": "Authentification réussi",
-                        "utilisateur":user.getUtilisateur()
+                        "user":user.getUser(),
                     })
                 } else {
                     res.status(401).json({
@@ -98,7 +100,7 @@ function login(req, res) {
     }
 }
 
-var direBonjour = function(req, res) {
+let direBonjour = function(req, res) {
     console.log('Bonjour !');
     res.status(200).json({
 
@@ -106,7 +108,7 @@ var direBonjour = function(req, res) {
     })
 }
 
-var direByeBye = function(req, res) {
+let direByeBye = function(req, res) {
     res.status(200).json({
 
         "text": "Bye Bye !"
