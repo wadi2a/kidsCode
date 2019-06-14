@@ -28,6 +28,33 @@ function signup(req, res) {
             })
         })
 
+function miseajour(req, res) {
+    if (!req.body.email || !req.body.password) {
+        //Le cas où l'email ou bien le password ne serait pas soumit ou nul
+        res.status(400).json({
+            "text": "Requête invalide"
+        })
+    } else {
+        let user = {
+            email: req.body.email,
+            password: passwordHash.generate(req.body.password)
+        }
+        let findUser = new Promise(function (resolve, reject) {
+            User.findOne({
+                email: user.email
+            }, function (err, result) {
+                if (err) {
+                    reject(500);
+                } else {
+                    if (result) {
+                        resolve(true)
+                    } else {
+                        reject(204)
+                    }
+                }
+            })
+        })
+
         findUser.then(function () {
             let _u = new User(user);
             _u.save(function (err, user) {
@@ -39,7 +66,11 @@ function signup(req, res) {
                     res.status(200).json({
                         "text": "Succès",
                         "token": user.getToken(),
-                        "user":  user.getUtilisateur()
+                        "user":  user.getUtilisateur(),
+                        "prenom": user.getFirstname(),
+                        "nom": user.getName(),
+                        "age": user.getAge(),
+                        "sex": user.getSex()
 
                     })
                 }
@@ -122,3 +153,4 @@ exports.direByeBye = direByeBye;
 
 exports.login = login;
 exports.signup = signup;
+exports.miseajour = miseajour;
