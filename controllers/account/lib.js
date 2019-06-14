@@ -57,7 +57,7 @@ function miseajour(req, res) {
 
         findUser.then(function () {
             let _u = new User(user);
-            _u.save(function (err, user) {
+            _u.update(function (err, user) {
                 if (err) {
                     res.status(500).json({
                         "text": "Erreur interne"
