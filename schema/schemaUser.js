@@ -15,8 +15,30 @@ var userSchema = mongoose.Schema({
 	password: {
         type: String,
         required: true
-    }
-},{ timestamps: { createdAt: 'created_at' }})
+	},
+	Age: {
+		type: String,
+		required: true
+
+	},
+	Name: {
+		type: String,
+		required: true
+	},
+	Firstname: {
+		type: String,
+		required: true
+	},
+	Sex: {
+		type: String,
+		required: true
+	},
+	
+
+},
+
+
+{ timestamps: { createdAt: 'created_at' }})
 
 
 userSchema.methods = {
@@ -28,6 +50,18 @@ userSchema.methods = {
 	},
     getUser: function () {
 		return this.email;
+	},
+	getAge: function(){
+		return this.Age;
+	},
+	getName: function(){
+		return this.Name
+	},
+	getSex: function(){
+		return this.Sex
+	},
+	getFirstname: function(){
+		return this.Firstname
 	}
 }
 
