@@ -14,24 +14,24 @@ var userSchema = mongoose.Schema({
 	},
 	password: {
         type: String,
-        required: true
-	},
-	Age: {
-		type: String,
-		required: true
 
 	},
-	Name: {
+	age: {
 		type: String,
-		required: true
+
+
 	},
-	Firstname: {
+	nom: {
 		type: String,
-		required: true
+
 	},
-	Sex: {
+	prenom:  {
 		type: String,
-		required: true
+
+	},
+	sex: {
+		type: String,
+
 	},
 	
 
@@ -52,16 +52,16 @@ userSchema.methods = {
 		return this.email;
 	},
 	getAge: function(){
-		return this.Age;
+		return this.age;
 	},
 	getName: function(){
 		return this.Name
 	},
 	getSex: function(){
-		return this.Sex
+		return this.sex
 	},
 	getFirstname: function(){
-		return this.Firstname
+		return this.prenom
 	}
 }
 

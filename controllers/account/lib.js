@@ -39,7 +39,7 @@ function signup(req, res) {
                     res.status(200).json({
                         "text": "Succès",
                         "token": user.getToken(),
-                        "user":  user.getUtilisateur(),
+                        "user":  user.getUser(),
                         "prenom": user.getFirstname(),
                         "nom": user.getName(),
                         "age": user.getAge(),
@@ -69,7 +69,7 @@ function signup(req, res) {
     }
 }
         function miseajour(req, res) {
-            if (!req.body.email || !req.body.password) {
+            if (!req.body.email) {
                 //Le cas où l'email ou bien le password ne serait pas soumit ou nul
                 res.status(400).json({
                     "text": "Requête invalide"
@@ -77,6 +77,7 @@ function signup(req, res) {
             } else {
                 let user = {
                     email: req.body.email,
+                    prenom: req.body.prenom,
 
                 }
                 let findUser = new Promise(function (resolve, reject) {
@@ -97,28 +98,28 @@ function signup(req, res) {
 
                 findUser.then(function () {
                     let _u = new User(user);
-                    _u.update(function (err, user) {
+                    _u.updateMany(function (err, user) {
                         if (err) {
-                            res.status(500).json({
+                            res.status(400).json({
                                 "text": "Erreur interne"
                             })
                         } else {
                             res.status(200).json({
                                 "text": "Succès",
-                                "token": user.getToken(),
-                                "user":  user.getUtilisateur(),
+                                "user":  user.getUser(),
                                 "prenom": user.getFirstname(),
                                 "nom": user.getName(),
                                 "age": user.getAge(),
                                 "sex": user.getSex()
 
                             })
+
                         }
                     })
                 }, function (error) {
                     switch (error) {
                         case 500:
-                            res.status(500).json({
+                            res.status(400).json({
                                 "text": "Erreur interne"
                             })
                             break;
