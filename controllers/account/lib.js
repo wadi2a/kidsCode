@@ -28,6 +28,46 @@ function signup(req, res) {
             })
         })
 
+        findUser.then(function () {
+            let _u = new User(user);
+            _u.save(function (err, user) {
+                if (err) {
+                    res.status(500).json({
+                        "text": "Erreur interne"
+                    })
+                } else {
+                    res.status(200).json({
+                        "text": "Succès",
+                        "token": user.getToken(),
+                        "user":  user.getUtilisateur(),
+                        "prenom": user.getFirstname(),
+                        "nom": user.getName(),
+                        "age": user.getAge(),
+                        "sex": user.getSex()
+
+                    })
+                }
+            })
+        }, function (error) {
+            switch (error) {
+                case 500:
+                    res.status(500).json({
+                        "text": "Erreur interne"
+                    })
+                    break;
+                case 204:
+                    res.status(204).json({
+                        "text": "L'adresse email existe déjà"
+                    })
+                    break;
+                default:
+                    res.status(500).json({
+                        "text": "Erreur interne"
+                    })
+            }
+        })
+    }
+}
         function miseajour(req, res) {
             if (!req.body.email || !req.body.password) {
                 //Le cas où l'email ou bien le password ne serait pas soumit ou nul
